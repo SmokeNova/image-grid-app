@@ -1,27 +1,28 @@
 import "./App.css";
-import '@mantine/core/styles.css';
-import { useEffect } from 'react';
-import { RootState, useAppDispatch } from "./store";
-import { useSelector } from 'react-redux';
+import "@mantine/core/styles.css";
 
-import { MantineProvider } from '@mantine/core';
-import { fetchImages } from "./slices/imagesSlice";
+import { MantineProvider } from "@mantine/core";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./routes/Root";
+import Homepage from "./routes/Homepage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        index: true,
+        element: <Homepage />
+      }
+    ]
+  },
+]);
 
 function App() {
-  const dispatch = useAppDispatch();
-  const { images, isLoading } = useSelector((state: RootState) => state.images);
-
-  useEffect(() => {
-    dispatch(fetchImages())
-  }, [])
-
-  if (isLoading) return 'loading';
-
-  console.log(images);
-
   return (
     <MantineProvider>
-      <h1 className="text-emerald-500 text-3xl">Hello World</h1>
+      <RouterProvider router={router} />
     </MantineProvider>
   );
 }
