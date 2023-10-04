@@ -1,3 +1,4 @@
 import Navbar from "./Navbar";
+import Searchbox from "./Searchbox";
 
-export { Navbar };
+export { Navbar, Searchbox };

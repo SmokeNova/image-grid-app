@@ -1,26 +1,16 @@
 import { Link } from "react-router-dom";
-import { Button, Input } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { UploadIcon } from "lucide-react";
+import { Searchbox } from ".";
 
 export default function Navbar() {
   return (
-    <div className="w-full border-b border-b-slate-700/20 shadow-lg py-3 px-3 flex items-center gap-6 text-slate-700">
+    <nav className="w-full border-b border-b-slate-700/20 shadow-lg py-3 px-5 flex items-center gap-6 text-slate-700">
       <Link to="/">
         <img className="w-10" src="./vite.svg" alt="logo" />
       </Link>
 
-      <form className="grow">
-        <Input
-          type="text"
-          name="searchterm"
-          placeholder="Search for high-resolution images"
-          py={2}
-          px={3}
-          radius="xl"
-          className="w-full placeholder:text-slate-500 placeholder:text-sm"
-          required
-        />
-      </form>
+        <Searchbox radius="full" />
 
       <Link
         to="/explore"
@@ -48,6 +38,6 @@ export default function Navbar() {
       >
         Upload
       </Button>
-    </div>
+    </nav>
   );
 }
