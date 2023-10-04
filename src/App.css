@@ -8,6 +8,10 @@
   overflow-x: hidden;
 }
 
+.card:hover > .overlay {
+  display: block;
+}
+
 .flex-center {
   @apply flex items-center justify-center;
 }

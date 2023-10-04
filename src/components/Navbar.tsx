@@ -10,7 +10,7 @@ export default function Navbar() {
         <img className="w-10" src="./vite.svg" alt="logo" />
       </Link>
 
-        <Searchbox radius="full" />
+      <Searchbox radius="full" />
 
       <Link
         to="/explore"
@@ -26,7 +26,7 @@ export default function Navbar() {
       </Link>
       <Link
         to="/upgrade"
-        className="bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-500 text-transparent bg-clip-text font-semibold"
+        className="bg-gradient-to-r hover:from-indigo-500 hover:to-rose-400 from-rose-400 via-fuchsia-500 to-indigo-500 text-transparent bg-clip-text font-semibold transition-normal"
       >
         Unsplash+
       </Link>

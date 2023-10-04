@@ -11,7 +11,7 @@ export default function HeroSection() {
       <div className="w-full h-full z-10 bg-black/50 absolute top-0 left-0" />
 
       <div className="flex-center w-full h-full z-20 relative text-white">
-        <div className="w-[65%] max-w-[65%] flex-col gap-6 flex">
+        <div className="w-[65%] min-w-[250px] flex-col gap-6 flex">
           <h1 className="text-5xl tracking-wide font-bold">Unsplash</h1>
 
           <div className="flex flex-col gap-1">

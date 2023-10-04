@@ -1,18 +1,13 @@
-import { Loader, Image } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store";
-import { useEffect } from "react";
-import { fetchImages } from "../slices/imagesSlice";
+import { RootState } from "../store";
+import { ImageCard } from ".";
 
 export default function ImageGrid() {
-  const { images, isLoading } = useSelector((store: RootState) => store.images);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchImages());
-  }, []);
+  const { images, isLoading, hasFailed } = useSelector((store: RootState) => store.images);
 
   if (isLoading) return <Loader />;
+  if (hasFailed) return <div>Something went wrong!</div>
 
   const div1Images = [] as typeof images;
   const div2Images = [] as typeof images;
@@ -38,25 +33,19 @@ export default function ImageGrid() {
     <div className="flex flex-wrap justify-between max-base:px-4 w-full max-w-7xl mx-auto mt-10">
       <div className="flex flex-col gap-5 w-[410px] max-base:w-[300px] max-sm:w-full">
         {div1Images.map((image) => (
-          <div key={image.id} className="w-full">
-            <Image src={image.url} />
-          </div>
+          <ImageCard key={image.id} id={image.id} url={image.url} />
         ))}
       </div>
 
       <div className="flex flex-col gap-5 w-[410px] max-base:w-[300px] max-sm:w-full">
         {div2Images.map((image) => (
-          <div key={image.id} className="w-full">
-            <Image src={image.url} />
-          </div>
+          <ImageCard key={image.id} id={image.id} url={image.url} />
         ))}
       </div>
 
       <div className="flex flex-col gap-5 w-[410px] max-base:w-[300px] max-sm:w-full">
         {div3Images.map((image) => (
-          <div key={image.id} className="w-full">
-            <Image src={image.url} />
-          </div>
+          <ImageCard key={image.id} id={image.id} url={image.url} />
         ))}
       </div>
     </div>
