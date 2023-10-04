@@ -1,7 +1,10 @@
-import HeroSection from "../../components/HeroSection";
+import { HeroSection, ImageGrid } from "../../components";
 
 export default function Homepage() {
-    return (
-        <HeroSection />
-    )
+  return (
+    <>
+      <HeroSection />
+      <ImageGrid />
+    </>
+  );
 }

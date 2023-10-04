@@ -5,15 +5,15 @@ interface IImage {
     id: string;
     url: string;
     width: number;
-    height: number;
-}
+    height: number
+  }
 
 interface IImages {
     images: IImage[],
     isLoading: boolean,
 }
 
-const url = "https://api.thecatapi.com/v1/images/search?limit=80&mime_types=&order=Random&size=small&page=3&sub_id=demo-ce06ee"
+const url = `https://api.thecatapi.com/v1/images/search?limit=10`
 
 export const fetchImages = createAsyncThunk('images/fetchImages', async (_, thunkAPI) => {
     try {

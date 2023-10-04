@@ -15,3 +15,8 @@
 .transition-normal {
   @apply transition-all duration-300 ease-in-out;
 }
+
+.temp {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
