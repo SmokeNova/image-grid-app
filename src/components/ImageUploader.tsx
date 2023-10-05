@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { useAppDispatch } from "../store";
 import { addImage } from "../slices/imagesSlice";
 
-export default function ImageUploader() {
+export default function ImageUploader({size = "sm"}: {size?: string}) {
   const dispatch = useAppDispatch();
   const [opened, setOpened] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -35,6 +35,7 @@ export default function ImageUploader() {
       <Tooltip label="Upload an image">
         <Button
           radius="sm"
+          size={size}
           leftSection={<UploadIcon size={20} />}
           className="border border-slate-700/30 text-slate-700/60 hover:border-slate-700 hover:text-slate-700 transition-normal"
           onClick={() => setOpened(true)}

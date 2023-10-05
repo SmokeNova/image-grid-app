@@ -6,6 +6,7 @@ interface IImage {
   url: string;
   width?: number;
   height?: number;
+  tags: string[];
 }
 
 interface IImages {
@@ -48,15 +49,25 @@ const imagesSlice = createSlice({
   initialState,
   reducers: {
     addImage(state, { payload: url }: { payload: string }) {
-      state.images.push({ id: generateId(), url });
+      state.images.push({ id: generateId(), url, tags: [] });
     },
     deleteImage(state, { payload: id }: { payload: string }) {
       state.images = state.images.filter((image) => image.id !== id);
     },
+    addTagToImage(
+      state,
+      { payload }: { payload: { id: string; tags: string[] } }
+    ) {
+      const { id, tags } = payload;
+      state.images = state.images.map((image) =>
+        image.id === id ? { ...image, tags } : image
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
-      state.images = [...action.payload];
+      const images = [...action.payload];
+      state.images = images.map((e) => ({ ...e, tags: ["cats"] }));
       state.isLoading = false;
     });
     builder.addCase(fetchImages.rejected, (state) => {
@@ -66,6 +77,6 @@ const imagesSlice = createSlice({
   },
 });
 
-export const { addImage, deleteImage } = imagesSlice.actions;
+export const { addImage, deleteImage, addTagToImage } = imagesSlice.actions;
 
 export default imagesSlice.reducer;
