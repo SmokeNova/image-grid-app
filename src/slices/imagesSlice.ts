@@ -4,8 +4,8 @@ import axios from "axios";
 interface IImage {
   id: string;
   url: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
 interface IImages {
@@ -15,6 +15,15 @@ interface IImages {
 }
 
 const url = `https://api.thecatapi.com/v1/images/search?limit=10`;
+
+const generateId = () => {
+  let id = "";
+  const str = "hpf840!gb;lyi23wzipxs";
+  for (let i = 0; i < 8; i++) {
+    id += str[Math.floor(Math.random() * str.length)];
+  }
+  return id;
+};
 
 export const fetchImages = createAsyncThunk(
   "images/fetchImages",
@@ -38,6 +47,9 @@ const imagesSlice = createSlice({
   name: "images",
   initialState,
   reducers: {
+    addImage(state, { payload: url }: { payload: string }) {
+      state.images.push({ id: generateId(), url });
+    },
     deleteImage(state, { payload: id }: { payload: string }) {
       state.images = state.images.filter((image) => image.id !== id);
     },
@@ -54,6 +66,6 @@ const imagesSlice = createSlice({
   },
 });
 
-export const { deleteImage } = imagesSlice.actions;
+export const { addImage, deleteImage } = imagesSlice.actions;
 
 export default imagesSlice.reducer;

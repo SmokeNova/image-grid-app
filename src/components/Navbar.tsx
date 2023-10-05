@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "@mantine/core";
-import { UploadIcon } from "lucide-react";
-import { Searchbox } from ".";
+import { ImageUploader, Searchbox } from ".";
 
 export default function Navbar() {
   return (
@@ -31,13 +29,7 @@ export default function Navbar() {
         Unsplash+
       </Link>
 
-      <Button
-        radius="sm"
-        leftSection={<UploadIcon size={20} />}
-        className="border border-slate-700/30 text-slate-700/60 hover:border-slate-700 hover:text-slate-700 transition-normal"
-      >
-        Upload
-      </Button>
+      <ImageUploader />
     </nav>
   );
 }
