@@ -1,71 +1,43 @@
 import { useState } from "react";
-import { Button, Image, Tooltip, TagsInput, Modal } from "@mantine/core";
-import { DeleteIcon, DownloadIcon, PlusIcon, SettingsIcon, CheckIcon} from "lucide-react";
+import { Button, Image, TagsInput, Modal } from "@mantine/core";
 import { useAppDispatch } from "../store";
 import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../slices/imagesSlice";
 import { IImage } from "../types";
 import { addToCollection, removeFromCollection } from "../slices/collectionSlice";
+import { CardOverlay } from ".";
+import { useLocation } from "react-router-dom";
 
 export default function ImageCard(props: IImage) {
   const { id, url, tags, addedToCollection } = props;
   const [opened, setOpened] = useState(false);
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
+
+  const addFn = () => {
+    if (addedToCollection) {
+      dispatch(removeImageFromCollection(id));
+      dispatch(removeFromCollection(id));
+    } else {
+      dispatch(addImageToCollection(id));
+      dispatch(addToCollection(props));
+    }
+  };
+  const settingsFn = () => {};
+  const downloadFn = () => {};
+  const deleteFn = () => setOpened(true);
 
   return (
     <div className="w-full flex flex-col gap-1">
       <div className="w-full relative cursor-pointer card">
         <Image src={url} fallbackSrc="./fallback-image.jpg" />
 
-        <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10 hidden overlay">
-          <div className="w-full h-full relative">
-            <div className="flex gap-2 absolute top-3 right-3 z-100">
-              <Button
-                size="compact-lg"
-                className="bg-slate-200 hover:bg-white text-slate-800 transition-normal"
-                onClick={() => {}}
-              >
-                <SettingsIcon />
-              </Button>
-              <Tooltip label={addedToCollection ? "Added to collection" : "Add to collection"}>
-                <Button
-                  size="compact-lg"
-                  className="bg-slate-200 hover:bg-white text-slate-800 transition-normal"
-                  onClick={() => {
-                    if (addedToCollection) {
-                      dispatch(removeImageFromCollection(id));
-                      dispatch(removeFromCollection(id));
-                    } else {
-                      dispatch(addImageToCollection(id));
-                      dispatch(addToCollection(props));
-                    }
-                  }}
-                >
-                  {addedToCollection ? <CheckIcon /> : <PlusIcon />}
-                </Button>
-              </Tooltip>
-            </div>
-
-            <Tooltip label="Download image">
-              <Button
-                size="compact-lg"
-                className="absolute bottom-3 right-3 bg-slate-200 hover:bg-white text-slate-800 transition-normal"
-                onClick={() => {}}
-              >
-                <DownloadIcon />
-              </Button>
-            </Tooltip>
-
-            <Tooltip label="Delete image">
-              <Button
-                size="compact-lg"
-                className="absolute bottom-3 left-3 bg-slate-200 hover:bg-white text-slate-800 transition-normal"
-                onClick={() => setOpened(true)}
-              >
-                <DeleteIcon />
-              </Button>
-            </Tooltip>
-          </div>
-        </div>
+        <CardOverlay
+          addedToCollection={addedToCollection}
+          addFn={addFn}
+          deleteFn={deleteFn}
+          downloadFn={downloadFn}
+          settingsFn={settingsFn}
+        />
       </div>
 
       <TagsInput
@@ -84,7 +56,7 @@ export default function ImageCard(props: IImage) {
               size="md"
               className="bg-red-600"
               onClick={() => {
-                dispatch(deleteImage(id));
+                pathname === "/collection" ? addFn() : dispatch(deleteImage(id))
                 setOpened(false);
               }}
             >

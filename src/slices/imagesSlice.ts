@@ -59,14 +59,14 @@ const imagesSlice = createSlice({
       image.addedToCollection = true;
     },
     removeImageFromCollection(state, { payload: id }: { payload: string }) {
-      const image = state.images.find((img) => img.id === id) as IImage;
-      image.addedToCollection = false;
+      const image = state.images.find((img) => img.id === id);
+      if (image) image.addedToCollection = false;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
       const images = [...action.payload];
-      state.images = images.map((e) => ({ ...e, tags: ["cats"] }));
+      state.images = images.map((e) => ({ ...e, tags: ["cats"], addedToCollection: false }));
       state.isLoading = false;
     });
     builder.addCase(fetchImages.rejected, (state) => {

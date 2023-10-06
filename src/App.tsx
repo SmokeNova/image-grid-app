@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import Homepage from "./routes/Homepage";
 import SearchResults from "./routes/SearchResults";
+import CollectionPage from "./routes/CollectionPage";
 
 const router = createBrowserRouter([
   {
@@ -17,9 +18,13 @@ const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
+        path: "/collection",
+        element: <CollectionPage />
+      },
+      {
         path: "/search/:term",
         element: <SearchResults />
-      }
+      },
     ],
   },
 ]);

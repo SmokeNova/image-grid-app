@@ -3,6 +3,7 @@ import Searchbox from "./Searchbox";
 import HeroSection from "./HeroSection";
 import ImageGrid from "./ImageGrid";
 import ImageCard from "./ImageCard";
+import CardOverlay from "./CardOverlay";
 import ImageUploader from "./ImageUploader";
 
-export { Navbar, Searchbox, HeroSection, ImageGrid, ImageCard, ImageUploader };
+export { Navbar, Searchbox, HeroSection, ImageGrid, ImageCard, CardOverlay, ImageUploader };

@@ -17,7 +17,7 @@ export default function Navbar() {
         Explore
       </Link>
       <Link
-        to="/advertise"
+        to="/collection"
         className="text-slate-700/70 hover:text-slate-700 transition-normal font-semibold"
       >
         My Collection
