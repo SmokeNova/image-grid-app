@@ -20,7 +20,7 @@ export default function Navbar() {
         to="/advertise"
         className="text-slate-700/70 hover:text-slate-700 transition-normal font-semibold"
       >
-        Advertise
+        My Collection
       </Link>
       <Link
         to="/upgrade"

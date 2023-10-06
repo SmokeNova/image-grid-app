@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { Button, Image, Tooltip, TagsInput, Modal } from "@mantine/core";
-import { DeleteIcon, DownloadIcon, PlusIcon, SettingsIcon } from "lucide-react";
+import { DeleteIcon, DownloadIcon, PlusIcon, SettingsIcon, CheckIcon} from "lucide-react";
 import { useAppDispatch } from "../store";
-import { deleteImage, addTagToImage } from "../slices/imagesSlice";
+import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../slices/imagesSlice";
+import { IImage } from "../types";
+import { addToCollection, removeFromCollection } from "../slices/collectionSlice";
 
-export default function ImageCard({
-  id,
-  url,
-  tags,
-}: {
-  id: string;
-  url: string;
-  tags: string[];
-}) {
+export default function ImageCard(props: IImage) {
+  const { id, url, tags, addedToCollection } = props;
   const [opened, setOpened] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -31,13 +26,21 @@ export default function ImageCard({
               >
                 <SettingsIcon />
               </Button>
-              <Tooltip label="Add to collection">
+              <Tooltip label={addedToCollection ? "Added to collection" : "Add to collection"}>
                 <Button
                   size="compact-lg"
                   className="bg-slate-200 hover:bg-white text-slate-800 transition-normal"
-                  onClick={() => {}}
+                  onClick={() => {
+                    if (addedToCollection) {
+                      dispatch(removeImageFromCollection(id));
+                      dispatch(removeFromCollection(id));
+                    } else {
+                      dispatch(addImageToCollection(id));
+                      dispatch(addToCollection(props));
+                    }
+                  }}
                 >
-                  <PlusIcon />
+                  {addedToCollection ? <CheckIcon /> : <PlusIcon />}
                 </Button>
               </Tooltip>
             </div>
@@ -80,7 +83,10 @@ export default function ImageCard({
             <Button
               size="md"
               className="bg-red-600"
-              onClick={() => dispatch(deleteImage(id))}
+              onClick={() => {
+                dispatch(deleteImage(id));
+                setOpened(false);
+              }}
             >
               Delete
             </Button>

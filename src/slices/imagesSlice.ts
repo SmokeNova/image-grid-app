@@ -1,19 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-interface IImage {
-  id: string;
-  url: string;
-  width?: number;
-  height?: number;
-  tags: string[];
-}
-
-interface IImages {
-  images: IImage[];
-  isLoading: boolean;
-  hasFailed: boolean;
-}
+import { IImage, IImages } from "../types";
 
 const url = `https://api.thecatapi.com/v1/images/search?limit=10`;
 
@@ -49,7 +36,12 @@ const imagesSlice = createSlice({
   initialState,
   reducers: {
     addImage(state, { payload: url }: { payload: string }) {
-      state.images.push({ id: generateId(), url, tags: [] });
+      state.images.push({
+        id: generateId(),
+        url,
+        tags: [],
+        addedToCollection: false,
+      });
     },
     deleteImage(state, { payload: id }: { payload: string }) {
       state.images = state.images.filter((image) => image.id !== id);
@@ -59,9 +51,16 @@ const imagesSlice = createSlice({
       { payload }: { payload: { id: string; tags: string[] } }
     ) {
       const { id, tags } = payload;
-      state.images = state.images.map((image) =>
-        image.id === id ? { ...image, tags } : image
-      );
+      const image = state.images.find((img) => img.id === id) as IImage;
+      image.tags = [...tags];
+    },
+    addImageToCollection(state, { payload: id }: { payload: string }) {
+      const image = state.images.find((img) => img.id === id) as IImage;
+      image.addedToCollection = true;
+    },
+    removeImageFromCollection(state, { payload: id }: { payload: string }) {
+      const image = state.images.find((img) => img.id === id) as IImage;
+      image.addedToCollection = false;
     },
   },
   extraReducers: (builder) => {
@@ -77,6 +76,6 @@ const imagesSlice = createSlice({
   },
 });
 
-export const { addImage, deleteImage, addTagToImage } = imagesSlice.actions;
+export const { addImage, deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } = imagesSlice.actions;
 
 export default imagesSlice.reducer;
