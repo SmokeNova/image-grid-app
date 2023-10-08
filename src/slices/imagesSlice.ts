@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IImage, IImages } from "../types";
 
-const url = `https://api.thecatapi.com/v1/images/search?limit=10`;
+const url = `https://api.thecatapi.com/v1/images/search?limit=40&api_key=${import.meta.env.VITE_CAT_API_KEY}`;
 
 const generateId = () => {
   let id = "";
