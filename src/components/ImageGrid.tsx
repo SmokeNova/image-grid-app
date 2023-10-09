@@ -24,6 +24,7 @@ export default function ImageGrid({images}: {images: IImage[]}) {
   });
 
   return (
+    <>
     <div className="flex flex-col gap-4 my-10">
         <div className="self-center">
           <ImageUploader size="md" />
@@ -49,5 +50,19 @@ export default function ImageGrid({images}: {images: IImage[]}) {
         </div>
       </div>
     </div>
+    <div className="temp">
+      {images.map((image) => {
+        const cn = Number(image.height) / Number(image.width);
+        const span = Math.ceil(Math.ceil(((cn * 442) / 20)) / 2);
+        console.log(cn);
+        console.log(span);
+        return (
+          <div  key={image.id + "ghtrtgrf"} style={{ gridRow: `span ${span}`} }>
+            <img src={image.url} alt="" style={{ width: "100%"} } />
+          </div>
+        )
+      })}
+    </div>
+    </>
   );
 }

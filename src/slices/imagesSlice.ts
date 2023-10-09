@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { IImage, IImages } from "../types";
 
 const url = `https://api.thecatapi.com/v1/images/search?limit=40&api_key=${import.meta.env.VITE_CAT_API_KEY}`;
@@ -17,8 +16,9 @@ export const fetchImages = createAsyncThunk(
   "images/fetchImages",
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get(url);
-      return res.data;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data;
     } catch (error: any) {
       thunkAPI.rejectWithValue("something went wrong!");
     }

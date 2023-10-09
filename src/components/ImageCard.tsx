@@ -23,7 +23,15 @@ export default function ImageCard(props: IImage) {
     }
   };
   const settingsFn = () => {};
-  const downloadFn = () => {};
+  const downloadFn = () => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "main";
+    link.download = "image";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const deleteFn = () => setOpened(true);
 
   return (
