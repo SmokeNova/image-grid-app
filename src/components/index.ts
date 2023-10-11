@@ -5,5 +5,15 @@ import ImageGrid from "./ImageGrid";
 import ImageCard from "./ImageCard";
 import CardOverlay from "./CardOverlay";
 import ImageUploader from "./ImageUploader";
+import SizeMenu from "./SizeMenu";
 
-export { Navbar, Searchbox, HeroSection, ImageGrid, ImageCard, CardOverlay, ImageUploader };
+export {
+  Navbar,
+  Searchbox,
+  HeroSection,
+  ImageGrid,
+  ImageCard,
+  CardOverlay,
+  ImageUploader,
+  SizeMenu,
+};

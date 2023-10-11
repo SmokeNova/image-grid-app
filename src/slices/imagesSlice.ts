@@ -1,16 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { IImage, IImages } from "../types";
+import { generateId } from "../utils";
 
-const url = `https://api.thecatapi.com/v1/images/search?limit=40&api_key=${import.meta.env.VITE_CAT_API_KEY}`;
-
-const generateId = () => {
-  let id = "";
-  const str = "hpf840!gb;lyi23wzipxs";
-  for (let i = 0; i < 8; i++) {
-    id += str[Math.floor(Math.random() * str.length)];
-  }
-  return id;
-};
+const url = `https://api.thecatapi.com/v1/images/search?limit=20&api_key=${import.meta.env.VITE_CAT_API_KEY}`;
 
 export const fetchImages = createAsyncThunk(
   "images/fetchImages",

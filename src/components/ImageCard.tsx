@@ -1,17 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Image, TagsInput, Modal } from "@mantine/core";
+import { useResizeObserver } from "@mantine/hooks";
 import { useAppDispatch } from "../store";
 import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../slices/imagesSlice";
 import { IImage } from "../types";
 import { addToCollection, removeFromCollection } from "../slices/collectionSlice";
-import { CardOverlay } from ".";
+import { CardOverlay, SizeMenu } from ".";
 import { useLocation } from "react-router-dom";
+import { calculateRows } from "../utils";
 
 export default function ImageCard(props: IImage) {
-  const { id, url, tags, addedToCollection } = props;
+  const { id, url, tags, addedToCollection, width, height } = props;
   const [opened, setOpened] = useState(false);
+  const [rows, setRows] = useState(0);
+  const [cols, setCols] = useState<1 | 2 | 3>(1);
+  const [ref, { width: divWidth }] = useResizeObserver();
+  console.log(divWidth)
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (divWidth != 0) {
+      setRows(() => calculateRows(width as number, height as number, divWidth));
+    };
+    if (divWidth <= 1030 && divWidth > 760) {
+      // change cols to 2
+    }
+    if (divWidth <= 760) {
+      // change cols to 1
+    }
+  }, [divWidth]);
 
   const addFn = () => {
     if (addedToCollection) {
@@ -22,7 +40,6 @@ export default function ImageCard(props: IImage) {
       dispatch(addToCollection(props));
     }
   };
-  const settingsFn = () => {};
   const downloadFn = () => {
     const link = document.createElement("a");
     link.href = url;
@@ -34,9 +51,12 @@ export default function ImageCard(props: IImage) {
   };
   const deleteFn = () => setOpened(true);
 
+
   return (
-    <div className="w-full flex flex-col gap-1">
-      <div className="w-full relative cursor-pointer card">
+    <div ref={ref} className="w-full flex flex-col gap-1" style={{ gridRow: `span ${rows}`, overflow: "hidden", gridColumn: `span ${cols}`} }>
+      {rows != 0 ? (
+        <>
+        <div className="w-full relative cursor-pointer card">
         <Image src={url} fallbackSrc="./fallback-image.jpg" />
 
         <CardOverlay
@@ -44,7 +64,7 @@ export default function ImageCard(props: IImage) {
           addFn={addFn}
           deleteFn={deleteFn}
           downloadFn={downloadFn}
-          settingsFn={settingsFn}
+          sizeMenu={<SizeMenu setCols={setCols} />}
         />
       </div>
 
@@ -80,6 +100,8 @@ export default function ImageCard(props: IImage) {
           </div>
         </div>
       </Modal>
+        </>
+      ): null}
     </div>
   );
 }
