@@ -11,7 +11,7 @@ export default function CollectionPage() {
         Your Collection
       </h1>
 
-      <ImageGrid images={images} />
+      <ImageGrid images={images} upload={false} />
     </div>
   );
 }
