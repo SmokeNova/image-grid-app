@@ -60,9 +60,14 @@ const imagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.fulfilled, (state, action) => {
-      const images = [...action.payload];
-      state.images = images.map((e) => ({ ...e, tags: ["cats"], addedToCollection: false }));
-      state.isLoading = false;
+      try {
+        const images = [...action.payload];
+        state.images = images.map((e) => ({ ...e, tags: ["cats"], addedToCollection: false }));
+        state.isLoading = false;
+      } catch (error) {
+        state.isLoading = false;
+        state.hasFailed = true;
+      }
     });
     builder.addCase(fetchImages.rejected, (state) => {
       state.isLoading = false;
