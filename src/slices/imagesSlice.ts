@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { IImage, IImages } from "../types";
+import { IImage, IImages, ISelectedImage } from "../types";
 import { generateId } from "../utils";
 
 const url = `https://api.thecatapi.com/v1/images/search?limit=20&api_key=${import.meta.env.VITE_CAT_API_KEY}`;
@@ -27,12 +27,15 @@ const imagesSlice = createSlice({
   name: "images",
   initialState,
   reducers: {
-    addImage(state, { payload: url }: { payload: string }) {
+    addImage(state, { payload: image }: { payload: ISelectedImage }) {
+      const {url, dimensions} = image;
       state.images.push({
         id: generateId(),
         url,
         tags: [],
         addedToCollection: false,
+        width: dimensions.width,
+        height: dimensions.height
       });
     },
     deleteImage(state, { payload: id }: { payload: string }) {

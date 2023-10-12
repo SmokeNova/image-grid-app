@@ -15,19 +15,18 @@ export default function ImageCard(props: IImage) {
   const [rows, setRows] = useState(0);
   const [cols, setCols] = useState<1 | 2 | 3>(1);
   const [ref, { width: divWidth }] = useResizeObserver();
-  console.log(divWidth)
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (divWidth != 0) {
-      setRows(() => calculateRows(width as number, height as number, divWidth));
+      setRows(() => calculateRows(width, height, divWidth));
     };
-    if (divWidth <= 1030 && divWidth > 760) {
-      // change cols to 2
+    if (divWidth <= 1030 && divWidth > 760 && cols == 3) {
+      setCols(2);
     }
-    if (divWidth <= 760) {
-      // change cols to 1
+    if (divWidth <= 760 && cols > 1) {
+      setCols(1);
     }
   }, [divWidth]);
 

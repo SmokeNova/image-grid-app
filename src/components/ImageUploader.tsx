@@ -1,20 +1,27 @@
-import { Button, Tooltip, Modal, Image } from "@mantine/core";
+import { Button, Tooltip, Modal, Image as ImageComponent } from "@mantine/core";
 import { UploadIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { useAppDispatch } from "../store";
 import { addImage } from "../slices/imagesSlice";
+import { ISelectedImage } from "../types";
 
 export default function ImageUploader({size = "sm"}: {size?: string}) {
   const dispatch = useAppDispatch();
   const [opened, setOpened] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ISelectedImage | null>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedImage(reader.result as string);
+        const img = new Image();
+        img.src = reader.result as string;
+        img.onload = () => {
+          const width = img.width;
+          const height = img.height;
+          setSelectedImage({url: reader.result as string, dimensions: {width, height}});
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -26,7 +33,7 @@ export default function ImageUploader({size = "sm"}: {size?: string}) {
   };
 
   const uploadImage = () => {
-    dispatch(addImage(selectedImage as string));
+    dispatch(addImage(selectedImage as ISelectedImage));
     closeModal();
   };
 
@@ -73,7 +80,7 @@ export default function ImageUploader({size = "sm"}: {size?: string}) {
             >
               Confirm
             </Button>
-            <Image src={selectedImage} />
+            <ImageComponent src={selectedImage.url} />
           </div>
         )}
       </Modal>

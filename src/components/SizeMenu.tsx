@@ -1,7 +1,7 @@
-import { Button, Text } from "@mantine/core";
-import { useClickOutside } from "@mantine/hooks";
-import { SettingsIcon } from "lucide-react";
 import { useState } from "react";
+import { Button, Text } from "@mantine/core";
+import { useClickOutside, useMediaQuery } from "@mantine/hooks";
+import { SettingsIcon } from "lucide-react";
 
 export default function SizeMenu({
   setCols,
@@ -10,9 +10,11 @@ export default function SizeMenu({
 }) {
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false));
+  const isBigScreen = useMediaQuery("(min-width: 1030px)");
+  const hasOneCol = useMediaQuery("(max-width: 760px)");
 
   return (
-    <div className="relative">
+    <div className={`relative ${hasOneCol ? "hidden" : ""}`}>
       <Button
         size="compact-lg"
         className="bg-slate-200 hover:bg-white text-slate-800 transition-normal"
@@ -43,13 +45,15 @@ export default function SizeMenu({
           >
             Medium
           </Button>
-          <Button
-            size="compact-sm"
-            className="text-slate-700 flex justify-start hover:bg-slate-200 px-3"
-            onClick={() => setCols(3)}
-          >
-            Large
-          </Button>
+          {isBigScreen && (
+            <Button
+              size="compact-sm"
+              className="text-slate-700 flex justify-start hover:bg-slate-200 px-3"
+              onClick={() => setCols(3)}
+            >
+              Large
+            </Button>
+          )}
         </div>
       )}
     </div>

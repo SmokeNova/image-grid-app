@@ -12,9 +12,7 @@ export const calculateRows = (
   height: number,
   actualWidth: number
 ) => {
-  console.log(width, height, actualWidth)
   const cn = height / width;
   const span = Math.ceil(Math.ceil((cn * actualWidth) / 20) / 2) + 2;
-  console.log(span)
   return span;
 };
