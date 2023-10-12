@@ -4,7 +4,7 @@ import { useResizeObserver } from "@mantine/hooks";
 import { useAppDispatch } from "../store";
 import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../slices/imagesSlice";
 import { IImage } from "../types";
-import { addToCollection, removeFromCollection } from "../slices/collectionSlice";
+import { addTagToAddedImage, addToCollection, removeFromCollection } from "../slices/collectionSlice";
 import { CardOverlay, SizeMenu } from ".";
 import { useLocation } from "react-router-dom";
 import { calculateRows } from "../utils";
@@ -72,7 +72,7 @@ export default function ImageCard(props: IImage) {
         placeholder="Add tags"
         maxTags={5}
         value={tags}
-        onChange={(tags) => dispatch(addTagToImage({ id, tags }))}
+        onChange={(tags) => addedToCollection ? dispatch(addTagToAddedImage({ id, tags })) : dispatch(addTagToImage({ id, tags }))}
       />
 
       <Modal opened={opened} onClose={() => setOpened(false)} centered>

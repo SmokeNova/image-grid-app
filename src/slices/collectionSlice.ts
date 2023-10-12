@@ -21,10 +21,19 @@ const collectionSlice = createSlice({
       state.images = state.images.filter((img) => img.id !== id);
       localStorage.setItem("collection", JSON.stringify(state));
     },
+    addTagToAddedImage(
+      state,
+      { payload }: { payload: { id: string; tags: string[] } }
+    ) {
+      const { id, tags } = payload;
+      const image = state.images.find((img) => img.id === id) as IImage;
+      image.tags = [...tags];
+      localStorage.setItem("collection", JSON.stringify(state));
+    },
   },
 });
 
-export const { addToCollection, removeFromCollection } =
+export const { addToCollection, removeFromCollection, addTagToAddedImage } =
   collectionSlice.actions;
 
 export default collectionSlice.reducer;

@@ -22,7 +22,7 @@ export default function SearchResults() {
           Nothing Found
         </h2>
       ) : (
-        <ImageGrid images={filteredImages} />
+        <ImageGrid images={filteredImages} upload={false} />
       )}
     </div>
   );
