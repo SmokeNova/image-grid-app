@@ -34,14 +34,20 @@ export default function SizeMenu({
           <Button
             size="compact-sm"
             className="text-slate-700 flex justify-start hover:bg-slate-200 px-3"
-            onClick={() => setCols(1)}
+            onClick={() => {
+              setCols(1);
+              setOpened(false);
+            }}
           >
             Small
           </Button>
           <Button
             size="compact-sm"
             className="text-slate-700 flex justify-start hover:bg-slate-200 px-3"
-            onClick={() => setCols(2)}
+            onClick={() => {
+              setCols(2);
+              setOpened(false);
+            }}
           >
             Medium
           </Button>
@@ -49,7 +55,10 @@ export default function SizeMenu({
             <Button
               size="compact-sm"
               className="text-slate-700 flex justify-start hover:bg-slate-200 px-3"
-              onClick={() => setCols(3)}
+              onClick={() => {
+                setCols(3);
+                setOpened(false);
+              }}
             >
               Large
             </Button>

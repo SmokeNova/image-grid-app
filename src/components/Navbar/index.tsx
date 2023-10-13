@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ImageUploader, Searchbox } from ".";
+import { ImageUploader, Searchbox } from "../";
 
 export default function Navbar() {
   return (

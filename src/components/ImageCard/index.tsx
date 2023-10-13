@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button, Image, TagsInput, Modal } from "@mantine/core";
 import { useResizeObserver } from "@mantine/hooks";
-import { useAppDispatch } from "../store";
-import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../slices/imagesSlice";
-import { IImage } from "../types";
-import { addTagToAddedImage, addToCollection, removeFromCollection } from "../slices/collectionSlice";
-import { CardOverlay, SizeMenu } from ".";
+import { useAppDispatch } from "../../store";
+import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../../slices/imagesSlice";
+import { IImage } from "../../types";
+import { addTagToAddedImage, addToCollection, removeFromCollection } from "../../slices/collectionSlice";
+import { CardOverlay, SizeMenu } from "../";
 import { useLocation } from "react-router-dom";
-import { calculateRows } from "../utils";
+import { calculateRows } from "../../utils";
 
 export default function ImageCard(props: IImage) {
   const { id, url, tags, addedToCollection, width, height } = props;

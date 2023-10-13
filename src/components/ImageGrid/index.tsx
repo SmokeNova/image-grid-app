@@ -1,5 +1,5 @@
-import { ImageCard, ImageUploader } from ".";
-import { IImage } from "../types";
+import { ImageCard, ImageUploader } from "../";
+import { IImage } from "../../types";
 
 export default function ImageGrid({ images, upload = true }: { images: IImage[], upload?: boolean }) {
 

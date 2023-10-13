@@ -1,9 +1,9 @@
 import { Button, Tooltip, Modal, Image as ImageComponent } from "@mantine/core";
 import { UploadIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
-import { useAppDispatch } from "../store";
-import { addImage } from "../slices/imagesSlice";
-import { ISelectedImage } from "../types";
+import { useAppDispatch } from "../../store";
+import { addImage } from "../../slices/imagesSlice";
+import { ISelectedImage } from "../../types";
 
 export default function ImageUploader({size = "sm"}: {size?: string}) {
   const dispatch = useAppDispatch();

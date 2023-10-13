@@ -1,5 +1,5 @@
 import { BackgroundImage } from "@mantine/core";
-import { Searchbox } from ".";
+import { Searchbox } from "../";
 
 export default function HeroSection() {
   return (
