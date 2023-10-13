@@ -11,7 +11,7 @@ export default function ImageGrid({ images, upload = true }: { images: IImage[],
       </div>
       )}
 
-      <div className="image-gallery max-base:px-8 w-full max-w-7xl mx-auto">
+      <div className="image-gallery max-lg:px-8 w-full max-w-7xl mx-auto">
         {images.map((image) => (
           <ImageCard key={image.id} {...image} />
         ))}
