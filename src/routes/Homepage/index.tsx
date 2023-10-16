@@ -4,10 +4,10 @@ import imagesStore from "../../stores/imagesStore";
 import { observer } from "mobx-react-lite";
 
 function Homepage() {
-  const { images, isLoading, hasFailed } = imagesStore
+  const { images, isLoading, hasFailed } = imagesStore;
 
   if (isLoading) return <Loader />;
-  if (hasFailed)
+  if (hasFailed) {
     return (
       <div className="flex items-center justify-center w-full h-[80vh]">
         <p className="text-slate-700 text-2xl font-semibold">
@@ -16,6 +16,7 @@ function Homepage() {
         </p>
       </div>
     );
+  }
 
   return (
     <>
