@@ -3,7 +3,7 @@ import { RootState } from "../../store";
 import { ImageGrid } from "../../components";
 
 export default function CollectionPage() {
-    const { images } = useSelector((store: RootState) => store.collection);
+  const { images } = useSelector((store: RootState) => store.collection);
 
   return (
     <div className="flex flex-col gap-4 mt-4">

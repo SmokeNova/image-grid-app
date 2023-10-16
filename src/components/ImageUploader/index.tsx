@@ -38,7 +38,7 @@ export default function ImageUploader({size = "sm"}: {size?: string}) {
   };
 
   return (
-    <>
+    <div className="max-md:hidden">
       <Tooltip label="Upload an image">
         <Button
           radius="sm"
@@ -84,6 +84,6 @@ export default function ImageUploader({size = "sm"}: {size?: string}) {
           </div>
         )}
       </Modal>
-    </>
+    </div>
   );
 }

@@ -72,7 +72,12 @@ export default function ImageCard(props: IImage) {
         placeholder="Add tags"
         maxTags={5}
         value={tags}
-        onChange={(tags) => addedToCollection ? dispatch(addTagToAddedImage({ id, tags })) : dispatch(addTagToImage({ id, tags }))}
+        onChange={(tags) => {
+          if (addedToCollection) {
+            dispatch(addTagToAddedImage({ id, tags }));
+          }
+          dispatch(addTagToImage({ id, tags }));
+        }}
       />
 
       <Modal opened={opened} onClose={() => setOpened(false)} centered>

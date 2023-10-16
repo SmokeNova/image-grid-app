@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ImageUploader, Searchbox } from "../";
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+
   return (
     <nav className="w-full border-b border-b-slate-700/20 shadow-lg py-3 px-5 flex items-center gap-6 text-slate-700">
       <Link to="/">
@@ -29,7 +31,9 @@ export default function Navbar() {
         Unsplash+
       </Link>
 
-      <ImageUploader />
+      {pathname === "/" && (
+        <ImageUploader />
+      )}
     </nav>
   );
 }
