@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
+import { observer } from 'mobx-react-lite';
 import { Button, Image, TagsInput, Modal } from "@mantine/core";
 import { useResizeObserver } from "@mantine/hooks";
-import { useAppDispatch } from "../../store";
-import { deleteImage, addTagToImage, addImageToCollection, removeImageFromCollection } from "../../slices/imagesSlice";
+import imagesStore from "../../stores/imagesStore";
+import collectionStore from "../../stores/collectionStore";
 import { IImage } from "../../types";
-import { addTagToAddedImage, addToCollection, removeFromCollection } from "../../slices/collectionSlice";
 import { CardOverlay, SizeMenu } from "../";
 import { useLocation } from "react-router-dom";
 import { calculateRows } from "../../utils";
 
-export default function ImageCard(props: IImage) {
+function ImageCard(props: IImage) {
   const { id, url, tags, addedToCollection, width, height } = props;
   const [opened, setOpened] = useState(false);
   const [rows, setRows] = useState(0);
   const [cols, setCols] = useState<1 | 2 | 3>(1);
   const [ref, { width: divWidth }] = useResizeObserver();
   const { pathname } = useLocation();
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (divWidth != 0) {
@@ -32,11 +31,11 @@ export default function ImageCard(props: IImage) {
 
   const addFn = () => {
     if (addedToCollection) {
-      dispatch(removeImageFromCollection(id));
-      dispatch(removeFromCollection(id));
+      imagesStore.removeImageFromCollection(id);
+      collectionStore.removeFromCollection(id);
     } else {
-      dispatch(addImageToCollection(id));
-      dispatch(addToCollection(props));
+      imagesStore.addImageToCollection(id);
+      collectionStore.addToCollection(props);
     }
   };
   const downloadFn = () => {
@@ -74,9 +73,9 @@ export default function ImageCard(props: IImage) {
         value={tags}
         onChange={(tags) => {
           if (addedToCollection) {
-            dispatch(addTagToAddedImage({ id, tags }));
+            collectionStore.addTagToAddedImage({ id, tags })
           }
-          dispatch(addTagToImage({ id, tags }));
+          imagesStore.addTagToImage({ id, tags });
         }}
       />
 
@@ -88,7 +87,7 @@ export default function ImageCard(props: IImage) {
               size="md"
               className="bg-red-600"
               onClick={() => {
-                pathname === "/collection" ? addFn() : dispatch(deleteImage(id))
+                pathname === "/collection" ? addFn() : imagesStore.deleteImage(id)
                 setOpened(false);
               }}
             >
@@ -109,3 +108,5 @@ export default function ImageCard(props: IImage) {
     </div>
   );
 }
+
+export default observer(ImageCard);

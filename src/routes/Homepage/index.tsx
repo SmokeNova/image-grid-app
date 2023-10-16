@@ -1,12 +1,10 @@
 import { Loader } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { HeroSection, ImageGrid } from "../../components";
+import imagesStore from "../../stores/imagesStore";
+import { observer } from "mobx-react-lite";
 
-export default function Homepage() {
-  const { images, isLoading, hasFailed } = useSelector(
-    (store: RootState) => store.images
-  );
+function Homepage() {
+  const { images, isLoading, hasFailed } = imagesStore
 
   if (isLoading) return <Loader />;
   if (hasFailed)
@@ -26,3 +24,5 @@ export default function Homepage() {
     </>
   );
 }
+
+export default observer(Homepage);

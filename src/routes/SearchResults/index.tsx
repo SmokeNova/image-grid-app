@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { ImageGrid } from "../../components";
+import imagesStore from "../../stores/imagesStore";
 
 export default function SearchResults() {
-  const { images } = useSelector((store: RootState) => store.images);
+  const { images } = imagesStore;
   const { term } = useParams();
 
-  const filteredImages = images.filter((image) =>
-    image.tags.includes((term as string).toLowerCase())
+  const filteredImages = images.filter((image) => {
+    const tags = image.tags.map(tag => tag.toLowerCase());
+    return tags.includes((term as string).toLowerCase())
+  }
   );
 
   return (

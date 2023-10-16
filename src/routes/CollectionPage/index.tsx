@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { ImageGrid } from "../../components";
+import { observer } from "mobx-react-lite";
+import collectionStore from "../../stores/collectionStore";
 
-export default function CollectionPage() {
-  const { images } = useSelector((store: RootState) => store.collection);
+function CollectionPage() {
+  const { images } = collectionStore;
 
   return (
     <div className="flex flex-col gap-4 mt-4">
@@ -15,3 +15,5 @@ export default function CollectionPage() {
     </div>
   );
 }
+
+export default observer(CollectionPage);

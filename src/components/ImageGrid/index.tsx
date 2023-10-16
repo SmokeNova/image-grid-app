@@ -1,7 +1,8 @@
 import { ImageCard, ImageUploader } from "../";
 import { IImage } from "../../types";
+import { observer } from "mobx-react-lite";
 
-export default function ImageGrid({ images, upload = true }: { images: IImage[], upload?: boolean }) {
+function ImageGrid({ images, upload = true }: { images: IImage[], upload?: boolean }) {
 
   return (
     <div className="flex flex-col gap-4 my-10">
@@ -19,3 +20,5 @@ export default function ImageGrid({ images, upload = true }: { images: IImage[],
     </div>
   );
 }
+
+export default observer(ImageGrid);

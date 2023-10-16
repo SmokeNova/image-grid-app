@@ -1,14 +1,12 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../../components";
 import { useEffect } from "react";
-import { fetchImages } from "../../slices/imagesSlice";
-import { useAppDispatch } from "../../store";
+import imagesStore from "../../stores/imagesStore";
 
 export default function Root() {
-  const dispatch = useAppDispatch();
   
   useEffect(() => {
-    dispatch(fetchImages());
+    imagesStore.fetchImages();
   }, []);
 
   return (

@@ -1,12 +1,10 @@
 import { Button, Tooltip, Modal, Image as ImageComponent } from "@mantine/core";
 import { UploadIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
-import { useAppDispatch } from "../../store";
-import { addImage } from "../../slices/imagesSlice";
+import imagesStore from "../../stores/imagesStore";
 import { ISelectedImage } from "../../types";
 
 export default function ImageUploader({size = "sm"}: {size?: string}) {
-  const dispatch = useAppDispatch();
   const [opened, setOpened] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ISelectedImage | null>(null);
 
@@ -33,7 +31,7 @@ export default function ImageUploader({size = "sm"}: {size?: string}) {
   };
 
   const uploadImage = () => {
-    dispatch(addImage(selectedImage as ISelectedImage));
+    imagesStore.addImage(selectedImage as ISelectedImage)
     closeModal();
   };
 
