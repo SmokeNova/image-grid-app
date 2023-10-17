@@ -5,10 +5,7 @@ class CollectionStore {
   images: IImage[] = [];
 
   constructor() {
-    this.images = (() => {
-      const images = localStorage.getItem("collection");
-      return images ? JSON.parse(images) : [];
-    })();
+    this.loadImagesFromLocalStorage();
     makeAutoObservable(this);
   }
 
@@ -16,13 +13,13 @@ class CollectionStore {
     const previousInstance = this.images.find((img) => img.id === image.id);
     if (!previousInstance) {
       this.images.push({...image, addedToCollection: true});
-      localStorage.setItem("collection", JSON.stringify(this.images));
+      this.saveImagesToLocalStorage();
     }
   }
 
   removeFromCollection(id: string) {
     this.images = this.images.filter((img) => img.id !== id);
-    localStorage.setItem("collection", JSON.stringify(this.images));
+    this.saveImagesToLocalStorage();
   }
 
   addTagToAddedImage(imageInfo: { id: string; tags: string[] }) {
@@ -30,7 +27,28 @@ class CollectionStore {
     this.images = this.images.map((image) => {
       return image.id === id ? { ...image, tags } : image;
     });
-    localStorage.setItem("collection", JSON.stringify(this.images));
+    this.saveImagesToLocalStorage();
+  }
+
+  private loadImagesFromLocalStorage() {
+    try {
+      const images = localStorage.getItem("collection");
+      if (images) {
+        this.images = JSON.parse(images);
+      }
+    } catch (error) {
+      console.error("Error loading collection from local storage:", error);
+      this.clearCollection();
+    }
+  }
+
+  private saveImagesToLocalStorage() {
+    localStorage.setItem('collection', JSON.stringify(this.images));
+  }
+
+  clearCollection() {
+    this.images = [];
+    localStorage.removeItem('collection');
   }
 }
 
